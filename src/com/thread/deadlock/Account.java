@@ -1,24 +1,22 @@
 package com.thread.deadlock;
 
 public class Account {
-
 	private int balance = 10000;
+
+	public void deposite(int amount) {
+		balance += amount;
+	}
 
 	public void withdraw(int amount) {
 		balance -= amount;
-	}
-
-	public void deposit(int amount) {
-		balance += amount;
 	}
 
 	public int getBalance() {
 		return balance;
 	}
 
-	public static void transfer(Account acc1, Account acc2, int amount) {
-		acc1.withdraw(amount);
-		acc2.deposit(amount);
-
+	public static void transfer(Account account1, Account account2, int amount) {
+		account1.withdraw(amount);
+		account2.deposite(amount);
 	}
 }

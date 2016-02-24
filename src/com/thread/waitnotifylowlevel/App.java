@@ -1,14 +1,18 @@
+package com.thread.waitnotifylowlevel;
 
-package com.thread.lowwaitnotify;
+public class App {
 
-
-
-public class LowlevelWaitNotify {
-	public static void main(String[] args) {
+	/**
+	 * @param args
+	 * @throws InterruptedException 
+	 */
+	public static void main(String[] args) throws InterruptedException {
 		final Processor processor = new Processor();
-		Thread producer = new Thread() {
+		Thread t1 = new Thread(new Runnable() {
+
 			@Override
 			public void run() {
+
 				try {
 					processor.producer();
 				} catch (InterruptedException e) {
@@ -16,11 +20,13 @@ public class LowlevelWaitNotify {
 					e.printStackTrace();
 				}
 			}
-		};
+		});
 
-		Thread comsumer = new Thread() {
+		Thread t2 = new Thread(new Runnable() {
+
 			@Override
 			public void run() {
+
 				try {
 					processor.consumer();
 				} catch (InterruptedException e) {
@@ -28,16 +34,14 @@ public class LowlevelWaitNotify {
 					e.printStackTrace();
 				}
 			}
-		};
+		});
 
-		producer.start();
-		comsumer.start();
-		try {
-			producer.join();
-			comsumer.join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		t1.start();
+		t2.start();
+
+		t1.join();
+		t2.join();
+
 	}
+
 }

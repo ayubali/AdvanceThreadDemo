@@ -4,40 +4,24 @@ import java.util.Scanner;
 
 public class Processor {
 
-	public void  producer()  {
+	public void producer() throws InterruptedException {
+
 		synchronized (this) {
-			System.out.println("starting...............producer");
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
-			}
-			System.out.println("resume.................producer");
+			System.out.println("Producer thread is running...");
+			wait();
+			System.out.println("Resumed..");
 		}
-		
 	}
-	public void consumer() {
-		Scanner scanner = new Scanner(System.in);
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+	public void consumer() throws InterruptedException {
+		Scanner sc = new Scanner(System.in);
+		Thread.sleep(2000);
 		synchronized (this) {
-			System.out.println("Enter key................");
-			scanner.nextLine();
-			System.out.println("Return key is pressed.....");
+			System.out.println("waiting for return key");
+			sc.nextLine();
+			System.out.println("Return key is pressed");
 			notify();
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out.println("comsumer................get chance");
+			Thread.sleep(5000);
 		}
 	}
 }
